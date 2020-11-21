@@ -73,6 +73,10 @@ footer p {
   text-align: center;
 }
 
+footer {
+  margin-top: 1em;
+}
+
 .domain {
   color: #888;
   font-style: italic;
