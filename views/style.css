@@ -63,3 +63,11 @@ input {
 .grid.submit {
   grid-template-columns: max-content auto;
 }
+
+/* XXX 保持在底部  */
+footer p {
+  font-size: 80%;
+  color: #555;
+  margin: 0;
+  text-align: center;
+}
