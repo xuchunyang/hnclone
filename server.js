@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 const user = require("./user.js");
 const Post = require("./post.js");
+const util = require("./util.js");
 
 require("dotenv").config();
 const app = express();
@@ -16,7 +17,7 @@ app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cookieSession({
-    secret: process.env.COOKIE_SECRET,
+    secret: process.env.COOKIE_SECRET || util.generatePassword(),
     sameSite: true,
     secure: true,
   })
