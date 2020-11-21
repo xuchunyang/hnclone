@@ -1,0 +1,27 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title login - hnclone
+  body
+    form(action="login" method="post")
+      h3 Login
+      p
+        label(for="login-username") Username:
+        input#login-username(name="username" type="text" required)
+      p
+        label(for="login-password") Password:
+        input#login-password(name="password" type="password" required)
+      p
+        input(type="submit" value="login")
+    form(action="signup" method="post")
+      h3 Create Account
+      p
+        label(for="username") Username:
+        input#username(name="username" type="text" required)
+      p
+        label(for="password") Password:
+        input#password(name="password" type="password" required)
+      p
+        input(type="submit" value="create account")
