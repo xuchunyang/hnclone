@@ -4,7 +4,14 @@ const morgan = require("morgan");
 
 const app = express();
 
+app.set("view engine", "pug");
+app.set("x-powered-by", false);
+
 app.use(morgan("dev"));
+
+app.get("/", (req, res) => {
+  res.render("index");
+});
 
 const server = app.listen(
   process.env.PORT || 3000,
