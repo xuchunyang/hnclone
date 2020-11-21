@@ -11,19 +11,19 @@ html(lang="en")
       h3 Login
       p
         label(for="login-username") Username:
-        input#login-username(name="username" type="text" required)
+        input#login-username(name="username" type="text" required autocomplete="username")
       p
         label(for="login-password") Password:
-        input#login-password(name="password" type="password" required)
+        input#login-password(name="password" type="password" required autocomplete="current-password")
       p
         input(type="submit" value="login")
     form(action="signup" method="post")
       h3 Create Account
       p
         label(for="username") Username:
-        input#username(name="username" type="text" required)
+        input#username(name="username" type="text" required autocomplete="username")
       p
         label(for="password") Password:
-        input#password(name="password" type="password" required)
+        input#password(name="password" type="password" required autocomplete="new-password")
       p
         input(type="submit" value="create account")
