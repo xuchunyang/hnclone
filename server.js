@@ -9,6 +9,7 @@ const app = express();
 
 app.set("view engine", "pug");
 app.set("x-powered-by", false);
+app.set("trust proxy", 1);
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +17,7 @@ app.use(
   cookieSession({
     secret: process.env.COOKIE_SECRET,
     sameSite: true,
+    secure: true,
   })
 );
 
