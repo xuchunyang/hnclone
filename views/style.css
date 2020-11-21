@@ -1,5 +1,34 @@
-/* TODO try css var for link color blue */
+body {
+  max-width: 40em;
+  margin: 0 auto;
+  padding: 5px;
+  color: #333;
+  background-color: #fff;
+  /* https://andybrewer.github.io/mvp/ */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
 
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  position: relative;
+}
+
+nav li {
+  margin-right: 1em;
+}
+
+nav li:last-of-type {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* TODO try css var for link color blue */
 a {
   text-decoration: none;
   color: blue;
@@ -11,4 +40,26 @@ a:hover {
 
 a:visited {
   color: blue;
+}
+
+input {
+  font-family: inherit;
+  font-size: 100%;
+}
+
+.grid {
+  display: grid;
+  /* XXX fit-content, auto, /submit  */
+  grid-template-columns: max-content max-content;
+  grid-auto-columns: auto;
+  grid-gap: 10px;
+}
+
+.grid :last-child {
+  grid-column: 2 / 3;
+  text-align: center;
+}
+
+.grid.submit {
+  grid-template-columns: max-content auto;
 }

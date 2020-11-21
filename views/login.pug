@@ -4,26 +4,24 @@ html(lang="en")
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     title login - hnclone
+    style
+      include style.css
   body
     if errMessage
       p #{errMessage}
     form(action="login" method="post")
       h3 Login
-      p
+      .grid
         label(for="login-username") Username:
         input#login-username(name="username" type="text" required autocomplete="username")
-      p
         label(for="login-password") Password:
         input#login-password(name="password" type="password" required autocomplete="current-password")
-      p
         input(type="submit" value="login")
     form(action="signup" method="post")
       h3 Create Account
-      p
+      .grid
         label(for="username") Username:
         input#username(name="username" type="text" required autocomplete="username")
-      p
         label(for="password") Password:
         input#password(name="password" type="password" required autocomplete="new-password")
-      p
         input(type="submit" value="create account")
