@@ -1,0 +1,28 @@
+{
+  "name": "hnclone",
+  "version": "1.0.0",
+  "description": "Hacker News 临摹项目",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "DEBUG=hn nodemon --signal SIGTERM server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuchunyang/hnclone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuchunyang/hnclone/issues"
+  },
+  "homepage": "https://github.com/xuchunyang/hnclone#readme",
+  "dependencies": {
+    "debug": "^4.3.1",
+    "express": "^5.0.0-alpha.8",
+    "morgan": "^1.10.0",
+    "sqlite3": "^5.0.0"
+  }
+}
