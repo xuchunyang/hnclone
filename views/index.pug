@@ -3,9 +3,15 @@ html(lang="en")
   head
     meta(charset="utf-8")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-    title hnclone
+    title hn clone
+    style
+      include style.css
   body
-    nav 
-      <a href="/">hnclone</a> 
-      <a href="/submit">submit</a>
-      <a href="/login">login</a>
+    nav
+      <a href="/">hn clone</a><span> 𐄁 </span>
+      <a href="/submit">submit</a><span> 𐄁 </span>
+      if username
+        span #{username} 𐄁 
+        <a href="/logout">logout</a>
+      else
+        <a href="/login">login</a>

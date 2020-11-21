@@ -1,0 +1,14 @@
+/* TODO try css var for link color blue */
+
+a {
+  text-decoration: none;
+  color: blue;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: blue;
+}

@@ -1,8 +1,10 @@
 const express = require("express");
 const debug = require("debug")("hn");
 const morgan = require("morgan");
+const cookieSession = require("cookie-session");
 const user = require("./user.js");
 
+require("dotenv").config();
 const app = express();
 
 app.set("view engine", "pug");
@@ -10,9 +12,19 @@ app.set("x-powered-by", false);
 
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cookieSession({
+    secret: process.env.COOKIE_SECRET,
+    sameSite: true,
+  })
+);
 
 app.get("/", (req, res) => {
-  res.render("index");
+  const username = req.session.username;
+  if (username) {
+    debug(`这是已登陆用户 ${username} 发送的请求`);
+  }
+  res.render("index", req.session);
 });
 
 app.get("/login", (req, res) => {
@@ -20,32 +32,34 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const {username, password} = req.body;
+  const { username, password } = req.body;
   if (!(username && password)) {
-    res.status(400).send("无法注册，缺少 username/password");
+    res.render("login", { errMessage: "无法注册，缺少 username/password" });
     return;
   }
-  const errorMsg = await user.signup(username, password);
-  if (errorMsg) {
-    res.status(400).send(errorMsg);
+  const errMessage = await user.signup(username, password);
+  if (errMessage) {
+    res.render("login", { errMessage });
     return;
   }
   debug("注册成功");
+  req.session = { username };
   res.redirect("/");
 });
 
 app.post("/login", async (req, res) => {
-  const {username, password} = req.body;
+  const { username, password } = req.body;
   if (!(username && password)) {
-    res.status(400).send("无法登陆，缺少 username/password");
+    res.render("login", { errMessage: "无法登陆，缺少 username/password" });
     return;
   }
-  const errorMsg = await user.login(username, password);
-  if (errorMsg) {
-    res.status(400).send(errorMsg);
+  const errMessage = await user.login(username, password);
+  if (errMessage) {
+    res.render("login", { errMessage });
     return;
   }
   debug("登陆成功");
+  req.session = { username };
   res.redirect("/");
 });
 
