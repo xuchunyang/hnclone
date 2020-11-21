@@ -5,7 +5,8 @@ body {
   color: #333;
   background-color: #fff;
   /* https://andybrewer.github.io/mvp/ */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   font-size: 1.2em;
   line-height: 1.5;
 }
@@ -70,4 +71,16 @@ footer p {
   color: #555;
   margin: 0;
   text-align: center;
+}
+
+.domain {
+  color: #888;
+  font-style: italic;
+  font-size: 80%;
+  vertical-align: middle;
+}
+
+.byline {
+  font-size: 80%;
+  color: #888;
 }

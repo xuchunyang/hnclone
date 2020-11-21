@@ -26,6 +26,7 @@ app.use(
 // TODO 全局导航栏
 // https://stackoverflow.com/questions/47626768/globally-set-dynamic-pug-variables
 app.locals.siteBuiltDate = new Date();
+app.locals.datefns = require("date-fns");
 
 app.get("/", (req, res) => {
   const username = req.session.username;
