@@ -31,6 +31,8 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+// TODO /signup /login /logout 实现 ?goto=/
+
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
   if (!(username && password)) {
@@ -60,6 +62,11 @@ app.post("/login", async (req, res) => {
   }
   debug("登陆成功");
   req.session = { username };
+  res.redirect("/");
+});
+
+app.get("/logout", async (req, res) => {
+  req.session = null;
   res.redirect("/");
 });
 
