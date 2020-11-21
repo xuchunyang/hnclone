@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   if (username) {
     debug(`这是已登陆用户 ${username} 发送的请求`);
   }
-  res.render("index", req.session);
+  res.render("index", { username, posts: Post.posts });
 });
 
 app.get("/login", (req, res) => {

@@ -16,4 +16,4 @@ const create = (option) => {
   });
 };
 
-module.exports = { create };
+module.exports = { create, posts };
