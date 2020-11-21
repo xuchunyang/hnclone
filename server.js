@@ -3,6 +3,7 @@ const debug = require("debug")("hn");
 const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 const user = require("./user.js");
+const Post = require("./post.js");
 
 require("dotenv").config();
 const app = express();
@@ -33,7 +34,15 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-// TODO /signup /login /logout 实现 ?goto=/
+app.get("/submit", (req, res) => {
+  if (!req.session.username) {
+    res.render("login", { errMessage: "You have to be logged in to submit." });
+    return;
+  }
+  res.render("submit");
+});
+
+// TODO /signup /login /logout /submit 实现 ?goto=/
 
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
@@ -69,6 +78,21 @@ app.post("/login", async (req, res) => {
 
 app.get("/logout", async (req, res) => {
   req.session = null;
+  res.redirect("/");
+});
+
+app.post("/submit", (req, res) => {
+  const username = req.session.username;
+  if (!username) {
+    res.render("login", { errMessage: "You have to be logged in to submit." });
+    return;
+  }
+  const { title, url } = req.body;
+  const errMessage = Post.create({ username, title, url });
+  if (errMessage) {
+    res.status(400).send(errMessage);
+    return;
+  }
   res.redirect("/");
 });
 

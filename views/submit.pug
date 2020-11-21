@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title login - hnclone
+  body
+    h3 submit
+    form(action="submit" method="post")
+      p
+        label(for="title") title
+        input#title(name="title" required)
+      p
+        label(for="url") url
+        input#url(name="url" required type="url")
+      p
+        input(type="submit")
