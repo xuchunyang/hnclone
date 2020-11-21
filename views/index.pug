@@ -7,14 +7,7 @@ html(lang="en")
     style
       include style.css
   body
-    nav
-      ul
-        li <a href="/">hn clone</a>
-        li <a href="/submit">submit</a>
-        if username
-          li #{username} <a href="/logout">logout</a>
-        else
-          li <a href="/login">login</a>
+    include nav.pug
     main
       ol
         each post in posts

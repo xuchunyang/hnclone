@@ -1,0 +1,8 @@
+nav
+  ul
+    li <a href="/">hn clone</a>
+    li <a href="/submit">submit</a>
+    if session.username
+      li #{session.username} <a href="/logout">logout</a>
+    else
+      li <a href="/login">login</a>
