@@ -14,7 +14,7 @@ html(lang="en")
       input(type="hidden" name="postId" value=post.id)
       textarea(name="content" required)
       input(type="submit" value="add a comment")
-    ul.comments
+    ol.comments
       each comment in comments
         li
           span by #{comment.username}, at #{comment.createdAt}

@@ -43,9 +43,15 @@ a:visited {
   color: blue;
 }
 
-input {
+input,
+textarea {
   font-family: inherit;
   font-size: 100%;
+}
+
+textarea {
+  width: 100%;
+  height: 5em;
 }
 
 .grid {
@@ -88,3 +94,4 @@ footer {
   font-size: 80%;
   color: #888;
 }
+
