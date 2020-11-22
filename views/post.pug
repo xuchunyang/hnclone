@@ -9,6 +9,7 @@ html(lang="en")
   body
     include nav.pug
     main
+    br
     include post-item.pug
     form(action="comment" method="post")
       input(type="hidden" name="postId" value=post.id)
@@ -17,6 +18,6 @@ html(lang="en")
     ol.comments
       each comment in comments
         li
-          span by #{comment.username}, at #{comment.createdAt}
+          span by #{comment.username}, at <time datetime="#{comment.createdAt.toISOString()}">#{datefns.formatDistance(comment.createdAt, new Date())}</time> ago
           div #{comment.content}
     include foot.pug
