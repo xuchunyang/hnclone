@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "DEBUG=hn* nodemon --signal SIGTERM server.js",
+    "dev": "DEBUG=hn* nodemon --signal SIGTERM -w . -w views -e js,pug server.js",
     "start": "node server.js"
   },
   "repository": {

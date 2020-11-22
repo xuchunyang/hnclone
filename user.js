@@ -22,4 +22,4 @@ const login = async (username, password) => {
   }
 };
 
-module.exports = { signup, login };
+module.exports = { users, signup, login };

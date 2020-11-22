@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const debug = require("debug")("hn");
 const morgan = require("morgan");
@@ -5,8 +6,32 @@ const cookieSession = require("cookie-session");
 const user = require("./user.js");
 const Post = require("./post.js");
 const util = require("./util.js");
+const fs = require("fs");
 
-require("dotenv").config();
+const loadData = () => {
+  const dbfile = "data.json";
+  if (!fs.existsSync(dbfile)) {
+    debug(`${dbfile} does not exist, will create on exit`);
+    return;
+  }
+  const data = JSON.parse(fs.readFileSync(dbfile, "utf8"));
+  user.users.push(...data.users);
+  Post.posts.push(...data.posts);
+  debug("Data loaded: %O", data);
+}
+
+const saveData = () => {
+  const dbfile = "data.json";
+  const data = {
+    users: user.users,
+    posts: Post.posts,
+  };
+  debug("Write data: %O", data);
+  fs.writeFileSync(dbfile, JSON.stringify(data, null, 2), "utf8")
+  debug("Wrote data to %s", dbfile);
+}
+
+loadData();
 const app = express();
 
 app.set("view engine", "pug");
@@ -69,6 +94,7 @@ app.post("/signup", async (req, res) => {
   debug("注册成功");
   req.session = { username };
   res.redirect("/");
+  debug("users after signup: %o", user.users);
 });
 
 app.post("/login", async (req, res) => {
@@ -120,5 +146,6 @@ process.on("SIGTERM", () => {
   debug("SIGTERM signal received: closing HTTP server");
   server.close(() => {
     debug("HTTP server closed");
+    saveData();
   });
 });
