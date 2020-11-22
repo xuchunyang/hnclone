@@ -203,6 +203,15 @@ app.get("/vote", (req, res) => {
   res.redirect("/");
 });
 
+app.get("/db", (req, res) => {
+  const data = {
+    users: user.users,
+    posts: Post.posts,
+    comments: Comment.comments,
+  };
+  res.json(data);
+});
+
 const server = app.listen(
   process.env.PORT || 3000,
   process.env.HOST || "localhost",
