@@ -7,4 +7,4 @@
     span #{post.voters.length} points by #{post.username} at 
     time(datetime=post.createdAt.toISOString()) #{datefns.formatDistance(post.createdAt, new Date())} ago
     span 
-      a(href="/post?id=" + post.id) comments
+    a(href="/post?id=" + post.id) #{post.comments || 0} comments
