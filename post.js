@@ -7,25 +7,29 @@ const create = (option) => {
   }
   const createdAt = new Date();
   const id = posts.length;
+  const voters = [];
+  const comments = 0;
   posts.push({
     url,
     title,
     username,
     createdAt,
     id,
+    voters,
+    comments,
   });
 };
 
 const vote = (option) => {
-  const {username, id} = option;
+  const { username, id } = option;
   if (!(username && id)) {
     return "Can't vote, missing argument";
   }
-  const post = posts.find(post => post.id == id);
+  const post = posts.find((post) => post.id == id);
   if (!post) {
     return "No such post with id: " + id;
   }
   post.voters.push(username);
-}
+};
 
 module.exports = { create, posts, vote };
