@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title #{post.title} - #{sitename}
+    style
+      include style.css
+  body
+    include nav.pug
+    main
+    include post-item.pug
+    form(action="comment" method="post")
+      input(type="hidden" name="postId" value=post.id)
+      textarea(name="content" required)
+      input(type="submit" value="add a comment")
+    ul.comments
+      each comment in comments
+        li
+          span by #{comment.username}, at #{comment.createdAt}
+          div #{comment.content}
+    include foot.pug

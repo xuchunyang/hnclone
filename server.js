@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 const user = require("./user.js");
 const Post = require("./post.js");
+const Comment = require("./comment.js");
 const util = require("./util.js");
 const fs = require("fs");
 
@@ -15,21 +16,38 @@ const loadData = () => {
     return;
   }
   const data = JSON.parse(fs.readFileSync(dbfile, "utf8"));
-  user.users.push(...data.users);
-  Post.posts.push(...data.posts);
+  let { users, posts, comments } = data;
+  if (users !== undefined) {
+    user.users.push(...users);
+  }
+  if (posts !== undefined) {
+    posts = posts.map((post) => {
+      post.createdAt = new Date(post.createdAt);
+      return post;
+    });
+    Post.posts.push(...posts);
+  }
+  if (comments !== undefined) {
+    comments = comments.map((comment) => {
+      comment.createdAt = new Date(comment.createdAt);
+      return comment;
+    });
+    Comment.comments.push(...comments);
+  }
   debug("Data loaded: %O", data);
-}
+};
 
 const saveData = () => {
   const dbfile = "data.json";
   const data = {
     users: user.users,
     posts: Post.posts,
+    comments: Comment.comments,
   };
   debug("Write data: %O", data);
-  fs.writeFileSync(dbfile, JSON.stringify(data, null, 2), "utf8")
+  fs.writeFileSync(dbfile, JSON.stringify(data, null, 2), "utf8");
   debug("Wrote data to %s", dbfile);
-}
+};
 
 loadData();
 const app = express();
@@ -76,6 +94,22 @@ app.get("/submit", (req, res) => {
     return;
   }
   res.render("submit");
+});
+
+app.get("/post", (req, res) => {
+  let { id } = req.query;
+  if (!id) {
+    res.status(400).send("Missing post id");
+    return;
+  }
+  id = parseInt(id);
+  const post = Post.posts.find((post) => post.id === id);
+  if (!post) {
+    res.status(400).send(`No such post id: ${id}`);
+    return;
+  }
+  const comments = Comment.comments.filter((comment) => comment.postId == id);
+  res.render("post", { post, comments });
 });
 
 // TODO /signup /login /logout /submit 实现 ?goto=/
@@ -131,6 +165,21 @@ app.post("/submit", (req, res) => {
     return;
   }
   res.redirect("/");
+});
+
+app.post("/comment", (req, res) => {
+  const username = req.session.username;
+  if (!username) {
+    res.render("login", { errMessage: "You have to be logged in to comment." });
+    return;
+  }
+  const { postId, content } = req.body;
+  const errMessage = Comment.createComment({ username, postId, content });
+  if (errMessage) {
+    res.status(400).send(errMessage);
+    return;
+  }
+  res.redirect("/post?id=" + postId);
 });
 
 const server = app.listen(
