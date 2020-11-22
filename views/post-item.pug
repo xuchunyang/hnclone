@@ -1,8 +1,10 @@
 .post-item
+  unless session.username && post.voters.includes(session.username)
+    <a class="vote" href="/vote?id=#{post.id}" title="投票">↑</a>
   <a href="#{post.url}">#{post.title}</a>
   <span class="domain">#{new URL(post.url).host}</span>
   .byline
-    span by #{post.username} at 
+    span #{post.voters.length} points by #{post.username} at 
     time(datetime=post.createdAt.toISOString()) #{datefns.formatDistance(post.createdAt, new Date())} ago
     span 
       a(href="/post?id=" + post.id) comments

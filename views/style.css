@@ -95,3 +95,7 @@ footer {
   color: #888;
 }
 
+a.vote,
+a.vote:visited {
+  color: #F44336;
+}

@@ -16,4 +16,16 @@ const create = (option) => {
   });
 };
 
-module.exports = { create, posts };
+const vote = (option) => {
+  const {username, id} = option;
+  if (!(username && id)) {
+    return "Can't vote, missing argument";
+  }
+  const post = posts.find(post => post.id == id);
+  if (!post) {
+    return "No such post with id: " + id;
+  }
+  post.voters.push(username);
+}
+
+module.exports = { create, posts, vote };

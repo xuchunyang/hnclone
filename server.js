@@ -73,6 +73,7 @@ app.locals.datefns = require("date-fns");
 // https://stackoverflow.com/questions/47626768/globally-set-dynamic-pug-variables
 app.use((req, res, next) => {
   res.locals.session = req.session;
+  // res.locals.goto = req.url;
   next();
 });
 
@@ -112,7 +113,7 @@ app.get("/post", (req, res) => {
   res.render("post", { post, comments });
 });
 
-// TODO /signup /login /logout /submit 实现 ?goto=/
+// TODO /signup /login /logout /submit /vote 实现 ?goto=/
 
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
@@ -180,6 +181,25 @@ app.post("/comment", (req, res) => {
     return;
   }
   res.redirect("/post?id=" + postId);
+});
+
+app.get("/vote", (req, res) => {
+  const username = req.session.username;
+  if (!username) {
+    res.render("login", { errMessage: "You have to be logged in to vote." });
+    return;
+  }
+  const id = req.query.id;
+  if (!id) {
+    res.status(400).send("Missing id");
+    return;
+  }
+  const errMessage = Post.vote({ username, id });
+  if (errMessage) {
+    res.status(400).send(errMessage);
+    return;
+  }
+  res.redirect("/");
 });
 
 const server = app.listen(
