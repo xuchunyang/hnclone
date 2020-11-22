@@ -74,6 +74,7 @@ app.locals.datefns = require("date-fns");
 app.use((req, res, next) => {
   res.locals.session = req.session;
   // res.locals.goto = req.url;
+  res.locals.startTime = new Date();
   next();
 });
 
